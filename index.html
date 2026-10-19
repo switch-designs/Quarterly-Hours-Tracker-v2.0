@@ -32,8 +32,14 @@ button{border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:point
 <div class="card" style="max-width:940px;margin:14px auto 0;padding:12px 20px">
 <label>Quarter</label>
 <select id="quarterSelect" onchange="switchQuarter(this.value)">
-<option value="q3">Quarter 3 — July 4, 2026 – October 2, 2026</option>
-<option value="q4">Quarter 4 — October 3, 2026 – December 31, 2026</option>
+<option value="q1_2026">Quarter 1 — 2026</option>
+<option value="q2_2026">Quarter 2 — 2026</option>
+<option value="q3_2026">Quarter 3 — July 4, 2026 – October 2, 2026</option>
+<option value="q4_2026">Quarter 4 — October 3, 2026 – December 31, 2026</option>
+<option value="q1_2027">Quarter 1 — 2027</option>
+<option value="q2_2027">Quarter 2 — 2027</option>
+<option value="q3_2027">Quarter 3 — 2027</option>
+<option value="q4_2027">Quarter 4 — 2027</option>
 </select>
 </div>
 <div class="tabs"><button class="active" onclick="tab('w17',this)">W17</button><button onclick="tab('w39',this)">W39</button><button onclick="tab('personal',this)">Personal</button><button onclick="tab('log',this)">Log</button></div>
@@ -389,11 +395,29 @@ function quarterForToday(){
  return current;
 }
 Object.keys(QUARTERS).forEach(k=>{if(!quarterStore.quarters[k])quarterStore.quarters[k]=blankState();});
+// Embedded historical Q3 2026 data from the user's supplied backup.
+// Seed only when Q3 is empty so this does not overwrite data already entered on this device.
+const EMBEDDED_Q3_2026={"w17":[{"id":"84079cee-1781-4538-80f9-616724200223","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":76.78,"date":"8/29/2026, 7:27:35 AM","type":"Regular","entryId":"84079cee-1781-4538-80f9-616724200223"},{"id":"ccc56cc8-5207-4cba-8518-f0c1057ecf0b","period":"Week 2 — Jul 11 – Jul 17, 2026","hours":80.98,"date":"8/29/2026, 7:28:02 AM","type":"Regular","entryId":"ccc56cc8-5207-4cba-8518-f0c1057ecf0b"},{"id":"7ae30589-e0a0-4efb-a004-0c526472c935","period":"Week 4 — Jul 25 – Jul 31, 2026","hours":78.72,"date":"8/29/2026, 7:28:25 AM","type":"Regular","entryId":"7ae30589-e0a0-4efb-a004-0c526472c935"},{"id":"253fa6ce-c528-443c-ac46-cd752c64f6d9","period":"Week 6 — Aug 8 – Aug 14, 2026","hours":60.47,"date":"8/29/2026, 7:28:55 AM","type":"Regular","entryId":"253fa6ce-c528-443c-ac46-cd752c64f6d9"},{"id":"f1076427-14be-4ff1-ab70-f77d13ba9317","period":"Week 3 — Jul 18 – Jul 24, 2026","hours":60.83,"date":"8/29/2026, 7:30:55 AM","type":"Regular","entryId":"f1076427-14be-4ff1-ab70-f77d13ba9317"},{"id":"e1832ae9-aa0e-4e16-b873-8ded5513b313","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":66.92,"date":"9/12/2026, 4:06:51 PM","type":"Regular","entryId":"e1832ae9-aa0e-4e16-b873-8ded5513b313"},{"id":"be16e134-cd87-47c2-bef5-a0749bc81c42","period":"Week 7 — Aug 15 – Aug 21, 2026","hours":75.45,"date":"9/19/2026, 10:22:30 PM","type":"Regular","entryId":"be16e134-cd87-47c2-bef5-a0749bc81c42"},{"id":"c141359f-4a00-4f90-b6bf-96d67ace1a33","period":"Week 8 — Aug 22 – Aug 28, 2026","hours":67.33,"date":"9/21/2026, 5:36:24 AM","type":"Regular","entryId":"c141359f-4a00-4f90-b6bf-96d67ace1a33"},{"id":"fb0bbf2b-a763-480c-b36a-07485fb769ab","period":"Week 5 — Aug 1 – Aug 7, 2026","hours":79.75,"date":"9/21/2026, 5:44:25 AM","type":"Regular","entryId":"fb0bbf2b-a763-480c-b36a-07485fb769ab"},{"id":"e5d2b1b9-4ba0-4bb2-8186-6e8c53031419","period":"Week 10 — Sep 5 – Sep 11, 2026","hours":62.33,"date":"9/22/2026, 8:00:52 AM","type":"Regular","entryId":"e5d2b1b9-4ba0-4bb2-8186-6e8c53031419"},{"id":"d3137ba8-6dc2-4bba-aa8c-9bd2ec1f1600","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":75.55,"date":"9/22/2026, 8:01:12 AM","type":"Regular","entryId":"d3137ba8-6dc2-4bba-aa8c-9bd2ec1f1600"},{"id":"5558d71f-0933-4fc7-818a-e8612dce71d2","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":65.88,"date":"10/1/2026, 6:10:21 AM","type":"Regular","entryId":"5558d71f-0933-4fc7-818a-e8612dce71d2"},{"id":"95ed4f00-159c-412d-8f1c-34ecaf83fa9c","period":"Week 13 — Sep 26 – Oct 2, 2026","hours":59.92,"date":"10/3/2026, 6:24:35 AM","type":"Regular","entryId":"95ed4f00-159c-412d-8f1c-34ecaf83fa9c"}],"w39":[{"id":"9f93016e-b9d0-4474-b08c-6ab24f06c63f","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":77.02,"date":"8/29/2026, 7:10:19 AM","type":"Regular","entryId":"9f93016e-b9d0-4474-b08c-6ab24f06c63f"},{"id":"c8dbc929-6622-4093-b67e-ce237dcf0862","period":"Week 2 — Jul 11 – Jul 17, 2026","hours":70.5,"date":"8/29/2026, 7:11:06 AM","type":"Regular","entryId":"c8dbc929-6622-4093-b67e-ce237dcf0862"},{"id":"2199f98f-c43f-4f04-92b4-ed1072739f87","period":"Week 3 — Jul 18 – Jul 24, 2026","hours":81.68,"date":"8/29/2026, 7:11:42 AM","type":"Regular","entryId":"2199f98f-c43f-4f04-92b4-ed1072739f87"},{"id":"9c65d778-383e-4d46-abc5-ff3e4f2369e9","period":"Week 4 — Jul 25 – Jul 31, 2026","hours":73.47,"date":"8/29/2026, 7:12:03 AM","type":"Regular","entryId":"9c65d778-383e-4d46-abc5-ff3e4f2369e9"},{"id":"d008fa74-6b66-41ad-baf9-ec203e0db1db","period":"Week 5 — Aug 1 – Aug 7, 2026","hours":67.22,"date":"8/29/2026, 7:12:21 AM","type":"Regular","entryId":"d008fa74-6b66-41ad-baf9-ec203e0db1db"},{"id":"df6f0abc-9cdf-45e4-8cd0-589231226676","period":"Week 6 — Aug 8 – Aug 14, 2026","hours":82.35,"date":"8/29/2026, 7:12:38 AM","type":"Regular","entryId":"df6f0abc-9cdf-45e4-8cd0-589231226676"},{"id":"3b828acd-ea02-499e-a597-ad7a9f7b0f6f","period":"Week 7 — Aug 15 – Aug 21, 2026","hours":63.97,"date":"8/29/2026, 7:12:55 AM","type":"Regular","entryId":"3b828acd-ea02-499e-a597-ad7a9f7b0f6f"},{"id":"73c03379-ea33-4b18-8afe-370a76928132","period":"Week 8 — Aug 22 – Aug 28, 2026","hours":77.92,"date":"8/29/2026, 7:13:09 AM","type":"Regular","entryId":"73c03379-ea33-4b18-8afe-370a76928132"},{"id":"943769b6-2644-4d60-a92a-bda901bad38a","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":70.78,"date":"9/5/2026, 8:12:52 AM","type":"Regular","entryId":"943769b6-2644-4d60-a92a-bda901bad38a"},{"id":"84797cf8-3bb3-4e22-873c-5e5e705727f2","period":"Week 10 — Sep 5 – Sep 11, 2026","hours":70.325,"date":"9/22/2026, 6:24:52 AM","type":"Regular","entryId":"84797cf8-3bb3-4e22-873c-5e5e705727f2"},{"id":"d13dece5-4595-4904-8328-4eeb3373beb4","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":75.2,"date":"10/1/2026, 6:13:00 AM","type":"Regular","entryId":"d13dece5-4595-4904-8328-4eeb3373beb4"},{"id":"6e388f21-73bc-467e-b54b-76c651521de1","period":"Week 13 — Sep 26 – Oct 2, 2026","hours":76.45,"date":"10/3/2026, 6:23:49 AM","type":"Regular","entryId":"6e388f21-73bc-467e-b54b-76c651521de1"},{"id":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":73.3,"date":"10/3/2026, 6:35:13 AM","type":"Regular","entryId":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f"}],"personal":[{"id":"b982b4f0-82f8-4f23-b930-5481b5847547","entryId":"b982b4f0-82f8-4f23-b930-5481b5847547","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":21.15,"date":"8/28/2026, 10:47:50 PM","type":"Personal"},{"id":"2d92629b-003f-48ee-a023-ad4b6c343708","entryId":"2d92629b-003f-48ee-a023-ad4b6c343708","period":"Pay Period 2 — Jul 11 – Jul 24, 2026","hours":91.08,"date":"8/29/2026, 8:33:36 AM","type":"Personal"},{"id":"7dbdf975-288a-4eeb-a60a-2795db7e3c6f","entryId":"7dbdf975-288a-4eeb-a60a-2795db7e3c6f","period":"Pay Period 3 — Jul 25 – Aug 7, 2026","hours":91.25,"date":"8/29/2026, 8:34:07 AM","type":"Personal"},{"id":"c36cdf0d-a203-4a83-a824-cd4bdeea6034","entryId":"c36cdf0d-a203-4a83-a824-cd4bdeea6034","period":"Pay Period 4 — Aug 8 – Aug 21, 2026","hours":95.43,"date":"8/29/2026, 8:34:24 AM","type":"Personal"},{"id":"bc6e1d44-fda7-4932-ada3-78bb96b8a806","entryId":"bc6e1d44-fda7-4932-ada3-78bb96b8a806","period":"Pay Period 5 — Aug 22 – Sep 4, 2026","hours":89.01,"date":"9/5/2026, 8:11:42 AM","type":"Personal"},{"id":"691831e6-891b-413a-a8b1-0362f211ec4d","entryId":"691831e6-891b-413a-a8b1-0362f211ec4d","period":"Pay Period 6 — Sep 5 – Sep 18, 2026","hours":86.57,"date":"9/22/2026, 6:32:06 AM","type":"Personal"},{"id":"179dfd33-6a5b-4b8e-98e0-66a50e924aec","entryId":"179dfd33-6a5b-4b8e-98e0-66a50e924aec","period":"Pay Period 7 — Sep 19 – Oct 2, 2026","hours":82.02,"date":"10/3/2026, 6:34:40 AM","type":"Personal"}],"personalPTO":[{"id":"c5d329ef-ee70-4a4f-aa5c-04e7d182e803","entryId":"4b61cf58-68a9-4d5d-90d0-8136d7328d58","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":30,"date":"8/28/2026, 4:10:11 PM","type":"PTO"}],"pto":{"w17":[[{"id":"16a3b3dd-eba6-437b-a302-09909ece9581","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":15,"date":"8/29/2026, 7:27:35 AM","type":"PTO","entryId":"84079cee-1781-4538-80f9-616724200223"}],[{"id":"3b631f90-6d08-4856-af74-d7877c57e13e","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":12,"date":"9/12/2026, 4:06:51 PM","type":"PTO","entryId":"e1832ae9-aa0e-4e16-b873-8ded5513b313"}]],"w39":[[{"id":"447faae1-e47d-4103-b59c-011738e66f4c","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":15,"date":"8/29/2026, 7:10:19 AM","type":"PTO","entryId":"9f93016e-b9d0-4474-b08c-6ab24f06c63f"}],[{"id":"2613a1aa-c539-4e30-931d-2a855e835d72","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":9,"date":"10/1/2026, 6:13:00 AM","type":"PTO","entryId":"d13dece5-4595-4904-8328-4eeb3373beb4"},{"id":"bc88c3d9-efbe-49dd-aef1-0219e99f50bc","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":9,"date":"10/3/2026, 6:35:13 AM","type":"PTO","entryId":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f"}]],"location_1":[[{"id":"16a3b3dd-eba6-437b-a302-09909ece9581","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":15,"date":"8/29/2026, 7:27:35 AM","type":"PTO","entryId":"84079cee-1781-4538-80f9-616724200223"}],[{"id":"3b631f90-6d08-4856-af74-d7877c57e13e","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":12,"date":"9/12/2026, 4:06:51 PM","type":"PTO","entryId":"e1832ae9-aa0e-4e16-b873-8ded5513b313"}]],"location_2":[[{"id":"447faae1-e47d-4103-b59c-011738e66f4c","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":15,"date":"8/29/2026, 7:10:19 AM","type":"PTO","entryId":"9f93016e-b9d0-4474-b08c-6ab24f06c63f"}],[{"id":"2613a1aa-c539-4e30-931d-2a855e835d72","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":9,"date":"10/1/2026, 6:13:00 AM","type":"PTO","entryId":"d13dece5-4595-4904-8328-4eeb3373beb4"},{"id":"bc88c3d9-efbe-49dd-aef1-0219e99f50bc","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":9,"date":"10/3/2026, 6:35:13 AM","type":"PTO","entryId":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f"}]]},"locations":{"location_1":[{"id":"84079cee-1781-4538-80f9-616724200223","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":76.78,"date":"8/29/2026, 7:27:35 AM","type":"Regular","entryId":"84079cee-1781-4538-80f9-616724200223"},{"id":"ccc56cc8-5207-4cba-8518-f0c1057ecf0b","period":"Week 2 — Jul 11 – Jul 17, 2026","hours":80.98,"date":"8/29/2026, 7:28:02 AM","type":"Regular","entryId":"ccc56cc8-5207-4cba-8518-f0c1057ecf0b"},{"id":"7ae30589-e0a0-4efb-a004-0c526472c935","period":"Week 4 — Jul 25 – Jul 31, 2026","hours":78.72,"date":"8/29/2026, 7:28:25 AM","type":"Regular","entryId":"7ae30589-e0a0-4efb-a004-0c526472c935"},{"id":"253fa6ce-c528-443c-ac46-cd752c64f6d9","period":"Week 6 — Aug 8 – Aug 14, 2026","hours":60.47,"date":"8/29/2026, 7:28:55 AM","type":"Regular","entryId":"253fa6ce-c528-443c-ac46-cd752c64f6d9"},{"id":"f1076427-14be-4ff1-ab70-f77d13ba9317","period":"Week 3 — Jul 18 – Jul 24, 2026","hours":60.83,"date":"8/29/2026, 7:30:55 AM","type":"Regular","entryId":"f1076427-14be-4ff1-ab70-f77d13ba9317"},{"id":"e1832ae9-aa0e-4e16-b873-8ded5513b313","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":66.92,"date":"9/12/2026, 4:06:51 PM","type":"Regular","entryId":"e1832ae9-aa0e-4e16-b873-8ded5513b313"},{"id":"be16e134-cd87-47c2-bef5-a0749bc81c42","period":"Week 7 — Aug 15 – Aug 21, 2026","hours":75.45,"date":"9/19/2026, 10:22:30 PM","type":"Regular","entryId":"be16e134-cd87-47c2-bef5-a0749bc81c42"},{"id":"c141359f-4a00-4f90-b6bf-96d67ace1a33","period":"Week 8 — Aug 22 – Aug 28, 2026","hours":67.33,"date":"9/21/2026, 5:36:24 AM","type":"Regular","entryId":"c141359f-4a00-4f90-b6bf-96d67ace1a33"},{"id":"fb0bbf2b-a763-480c-b36a-07485fb769ab","period":"Week 5 — Aug 1 – Aug 7, 2026","hours":79.75,"date":"9/21/2026, 5:44:25 AM","type":"Regular","entryId":"fb0bbf2b-a763-480c-b36a-07485fb769ab"},{"id":"e5d2b1b9-4ba0-4bb2-8186-6e8c53031419","period":"Week 10 — Sep 5 – Sep 11, 2026","hours":62.33,"date":"9/22/2026, 8:00:52 AM","type":"Regular","entryId":"e5d2b1b9-4ba0-4bb2-8186-6e8c53031419"},{"id":"d3137ba8-6dc2-4bba-aa8c-9bd2ec1f1600","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":75.55,"date":"9/22/2026, 8:01:12 AM","type":"Regular","entryId":"d3137ba8-6dc2-4bba-aa8c-9bd2ec1f1600"},{"id":"5558d71f-0933-4fc7-818a-e8612dce71d2","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":65.88,"date":"10/1/2026, 6:10:21 AM","type":"Regular","entryId":"5558d71f-0933-4fc7-818a-e8612dce71d2"},{"id":"95ed4f00-159c-412d-8f1c-34ecaf83fa9c","period":"Week 13 — Sep 26 – Oct 2, 2026","hours":59.92,"date":"10/3/2026, 6:24:35 AM","type":"Regular","entryId":"95ed4f00-159c-412d-8f1c-34ecaf83fa9c"}],"location_2":[{"id":"9f93016e-b9d0-4474-b08c-6ab24f06c63f","period":"Week 1 — Jul 4 – Jul 10, 2026","hours":77.02,"date":"8/29/2026, 7:10:19 AM","type":"Regular","entryId":"9f93016e-b9d0-4474-b08c-6ab24f06c63f"},{"id":"c8dbc929-6622-4093-b67e-ce237dcf0862","period":"Week 2 — Jul 11 – Jul 17, 2026","hours":70.5,"date":"8/29/2026, 7:11:06 AM","type":"Regular","entryId":"c8dbc929-6622-4093-b67e-ce237dcf0862"},{"id":"2199f98f-c43f-4f04-92b4-ed1072739f87","period":"Week 3 — Jul 18 – Jul 24, 2026","hours":81.68,"date":"8/29/2026, 7:11:42 AM","type":"Regular","entryId":"2199f98f-c43f-4f04-92b4-ed1072739f87"},{"id":"9c65d778-383e-4d46-abc5-ff3e4f2369e9","period":"Week 4 — Jul 25 – Jul 31, 2026","hours":73.47,"date":"8/29/2026, 7:12:03 AM","type":"Regular","entryId":"9c65d778-383e-4d46-abc5-ff3e4f2369e9"},{"id":"d008fa74-6b66-41ad-baf9-ec203e0db1db","period":"Week 5 — Aug 1 – Aug 7, 2026","hours":67.22,"date":"8/29/2026, 7:12:21 AM","type":"Regular","entryId":"d008fa74-6b66-41ad-baf9-ec203e0db1db"},{"id":"df6f0abc-9cdf-45e4-8cd0-589231226676","period":"Week 6 — Aug 8 – Aug 14, 2026","hours":82.35,"date":"8/29/2026, 7:12:38 AM","type":"Regular","entryId":"df6f0abc-9cdf-45e4-8cd0-589231226676"},{"id":"3b828acd-ea02-499e-a597-ad7a9f7b0f6f","period":"Week 7 — Aug 15 – Aug 21, 2026","hours":63.97,"date":"8/29/2026, 7:12:55 AM","type":"Regular","entryId":"3b828acd-ea02-499e-a597-ad7a9f7b0f6f"},{"id":"73c03379-ea33-4b18-8afe-370a76928132","period":"Week 8 — Aug 22 – Aug 28, 2026","hours":77.92,"date":"8/29/2026, 7:13:09 AM","type":"Regular","entryId":"73c03379-ea33-4b18-8afe-370a76928132"},{"id":"943769b6-2644-4d60-a92a-bda901bad38a","period":"Week 9 — Aug 29 – Sep 4, 2026","hours":70.78,"date":"9/5/2026, 8:12:52 AM","type":"Regular","entryId":"943769b6-2644-4d60-a92a-bda901bad38a"},{"id":"84797cf8-3bb3-4e22-873c-5e5e705727f2","period":"Week 10 — Sep 5 – Sep 11, 2026","hours":70.325,"date":"9/22/2026, 6:24:52 AM","type":"Regular","entryId":"84797cf8-3bb3-4e22-873c-5e5e705727f2"},{"id":"d13dece5-4595-4904-8328-4eeb3373beb4","period":"Week 11 — Sep 12 – Sep 18, 2026","hours":75.2,"date":"10/1/2026, 6:13:00 AM","type":"Regular","entryId":"d13dece5-4595-4904-8328-4eeb3373beb4"},{"id":"6e388f21-73bc-467e-b54b-76c651521de1","period":"Week 13 — Sep 26 – Oct 2, 2026","hours":76.45,"date":"10/3/2026, 6:23:49 AM","type":"Regular","entryId":"6e388f21-73bc-467e-b54b-76c651521de1"},{"id":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f","period":"Week 12 — Sep 19 – Sep 25, 2026","hours":73.3,"date":"10/3/2026, 6:35:13 AM","type":"Regular","entryId":"b7b89dbb-c527-4fe4-a7ae-97ef6e84a42f"}]},"adminHours":{"location_1":[],"location_2":[]}};
+function hasQuarterRecords(s){
+  if(!s || typeof s!=='object') return false;
+  const arrs=[s.w17,s.w39,s.personal,s.personalPTO,s.locations&&s.locations.location_1,s.locations&&s.locations.location_2,s.adminHours&&s.adminHours.location_1,s.adminHours&&s.adminHours.location_2];
+  if(arrs.some(a=>Array.isArray(a)&&a.length>0)) return true;
+  const p=s.pto||{};
+  return ['w17','w39','location_1','location_2'].some(k=>Array.isArray(p[k])&&p[k].some(slot=>Array.isArray(slot)&&slot.length>0));
+}
+if(!hasQuarterRecords(quarterStore.quarters.q3_2026)){
+  quarterStore.quarters.q3_2026=normalizeState(JSON.parse(JSON.stringify(EMBEDDED_Q3_2026)));
+  quarterStore.quarters.q3_2026.w17=quarterStore.quarters.q3_2026.locations.location_1;
+  quarterStore.quarters.q3_2026.w39=quarterStore.quarters.q3_2026.locations.location_2;
+  quarterStore.quarters.q3_2026.pto.w17=quarterStore.quarters.q3_2026.pto.location_1;
+  quarterStore.quarters.q3_2026.pto.w39=quarterStore.quarters.q3_2026.pto.location_2;
+  localStorage.setItem(QUARTER_KEY,JSON.stringify(quarterStore));
+}
 let activeQuarter=quarterForToday();
 quarterStore.current=activeQuarter;
 let state=quarterStore.quarters[activeQuarter];
 function persistQuarters(){quarterStore.current=activeQuarter;quarterStore.quarters[activeQuarter]=state;localStorage.setItem(QUARTER_KEY,JSON.stringify(quarterStore));localStorage.setItem(KEY,JSON.stringify(state))}
-function switchQuarter(q){if(!QUARTERS[q])return;quarterStore.quarters[activeQuarter]=state;activeQuarter=q;state=quarterStore.quarters[q];persistQuarters();populateQuarterUI();render()}
+function switchQuarter(q){if(!QUARTERS[q])return;quarterStore.quarters[activeQuarter]=state;activeQuarter=q;state=normalizeState(quarterStore.quarters[q]||blankState());quarterStore.quarters[q]=state;persistQuarters();const label=document.getElementById('quarterLabel');if(label)label.textContent=QUARTERS[q].label||q;const sel=document.getElementById('quarterSelect');if(sel)sel.value=q;try{populateDynamicPeriods();renderDynamic();}catch(e){try{populateQuarterUI();render();}catch(e2){console.warn('Quarter display refresh:',e2);}}}
 function populateQuarterUI(){const q=QUARTERS[activeQuarter];document.getElementById('quarterSelect').value=activeQuarter;document.getElementById('quarterLabel').textContent=q.label;document.getElementById('w17period').innerHTML=q.weeks.map(x=>'<option>'+esc(x)+'</option>').join('');document.getElementById('w39period').innerHTML=q.weeks.map(x=>'<option>'+esc(x)+'</option>').join('');document.getElementById('personalperiod').innerHTML=q.personal.map(x=>'<option>'+esc(x)+'</option>').join('')}
 function total(a){return a.reduce((s,e)=>s+Number(e.hours),0)} function fmt(n){return Number(n).toLocaleString(undefined,{maximumFractionDigits:2})}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -603,7 +627,10 @@ async function backupData(){
  try{
    quarterStore.quarters[activeQuarter]=state;
    quarterStore.current=activeQuarter;
-   const payload={version:1,app:'Quarter Hours Tracker',created:new Date().toISOString(),data:quarterStore};
+   // Include every quarter and all registration/location/assistant settings.
+   Object.keys(QUARTERS).forEach(k=>{if(!quarterStore.quarters[k])quarterStore.quarters[k]=blankState();});
+   localStorage.setItem(QUARTER_KEY,JSON.stringify(quarterStore));
+   const payload={version:3,app:'Quarter Hours Tracker v2.0',created:new Date().toISOString(),registration:JSON.parse(localStorage.getItem(REG_KEY)||'null'),data:JSON.parse(JSON.stringify(quarterStore))};
    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
    const url=URL.createObjectURL(blob);
    const a=document.createElement('a');a.href=url;a.download='Quarter-Hours-Tracker-backup.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
@@ -620,47 +647,130 @@ function handleRestoreFile(event){
  const reader=new FileReader();
  reader.onload=function(){
    try{
-     let parsed=JSON.parse(String(reader.result||'').replace(/^\uFEFF/,''));
-     // Current backup format: {version, app, created, data:{current,quarters:{...}}}
-     let incoming=(parsed&&parsed.data!==undefined)?parsed.data:parsed;
-     if(typeof incoming==='string') incoming=JSON.parse(incoming);
-     if(!incoming||typeof incoming!=='object')throw new Error('Not an object');
+     const raw=String(reader.result||'').replace(/^\uFEFF/,'').trim();
+     if(!raw) throw new Error('The selected file is empty.');
+     const parsed=JSON.parse(raw);
+     if(!parsed || typeof parsed!=='object' || Array.isArray(parsed)) throw new Error('JSON root must be an object.');
 
-     // Accept the original working app backup format: {version, exportedAt, state:{...}}.
-     // That backup contains Quarter 3 data directly under "state".
-     if(!incoming.quarters && incoming.state && typeof incoming.state==='object'){
-       incoming={current:currentQuarterKey(),quarters:{q3_2026:incoming.state,q4_2026:blankState()}};
+     // Current backups are {version, app, created, data: {current, quarters}}.
+     // Older backups are {version, exportedAt, state: {w17, w39, personal, ...}}.
+     let incoming=(parsed.data && typeof parsed.data==='object') ? parsed.data : parsed;
+     if(typeof incoming==='string') incoming=JSON.parse(incoming);
+     if(!incoming || typeof incoming!=='object' || Array.isArray(incoming)) throw new Error('No tracker data object found.');
+
+     let restoredStore;
+     if(incoming.quarters && typeof incoming.quarters==='object' && !Array.isArray(incoming.quarters)){
+       // Preserve every quarter in the backup, including quarters added in future versions.
+       const restoredQuarters={};
+       Object.keys(QUARTERS).forEach(k=>{
+         const short=k.replace(/_\d{4}$/,'');
+         const source=incoming.quarters[k] || incoming.quarters[short];
+         restoredQuarters[k]=source ? normalizeState(JSON.parse(JSON.stringify(source))) : blankState();
+       });
+       // Older exports may contain both short keys (q3/q4) and year keys
+       // (q3_2026/q4_2026). Merge those records into the matching year quarter
+       // instead of leaving the older data stranded under an unused key.
+       function uniqueEntries(...arrays){
+         const out=[],seen=new Set();
+         arrays.forEach(a=>(Array.isArray(a)?a:[]).forEach(e=>{
+           if(!e||typeof e!=='object')return;
+           const sig=e.id||e.entryId||[e.period,e.hours,e.date,e.type].join('|');
+           if(seen.has(sig))return; seen.add(sig); out.push(e);
+         }));
+         return out;
+       }
+       function mergeQuarterState(target, older){
+         target=normalizeState(target); older=normalizeState(older);
+         target.locations=target.locations||{}; target.adminHours=target.adminHours||{};
+         older.locations=older.locations||{}; older.adminHours=older.adminHours||{};
+         target.locations.location_1=uniqueEntries(older.locations.location_1,older.w17,target.locations.location_1,target.w17);
+         target.locations.location_2=uniqueEntries(older.locations.location_2,older.w39,target.locations.location_2,target.w39);
+         target.adminHours.location_1=uniqueEntries(older.adminHours.location_1,target.adminHours.location_1);
+         target.adminHours.location_2=uniqueEntries(older.adminHours.location_2,target.adminHours.location_2);
+         target.personal=uniqueEntries(older.personal,target.personal);
+         target.personalPTO=uniqueEntries(older.personalPTO,target.personalPTO);
+         target.pto=target.pto||{}; older.pto=older.pto||{};
+         ['location_1','location_2'].forEach((key,idx)=>{
+           const legacyKey=idx===0?'w17':'w39';
+           const left=Array.isArray(older.pto[legacyKey])?older.pto[legacyKey]:[];
+           const olderDynamic=Array.isArray(older.pto[key])?older.pto[key]:[];
+           const right=Array.isArray(target.pto[key])?target.pto[key]:[];
+           const slots=[],seen=new Set();
+           for(let i=0;i<Math.max(left.length,olderDynamic.length,right.length,2);i++){
+             const vals=uniqueEntries(left[i],olderDynamic[i],right[i]).filter(e=>{const sig=e.id||e.entryId||[e.period,e.hours,e.date].join('|');if(seen.has(sig))return false;seen.add(sig);return true;});
+             slots.push(vals);
+           }
+           target.pto[key]=slots;
+         });
+         target.w17=target.locations.location_1; target.w39=target.locations.location_2;
+         target.pto.w17=target.pto.location_1; target.pto.w39=target.pto.location_2;
+         return target;
+       }
+
+       if(incoming.quarters.q3 && restoredQuarters.q3_2026) restoredQuarters.q3_2026=mergeQuarterState(restoredQuarters.q3_2026,incoming.quarters.q3);
+       else if(incoming.quarters.q3 && restoredQuarters.q3) restoredQuarters.q3=mergeQuarterState(restoredQuarters.q3,incoming.quarters.q3);
+       if(incoming.quarters.q4 && restoredQuarters.q4_2026) restoredQuarters.q4_2026=mergeQuarterState(restoredQuarters.q4_2026,incoming.quarters.q4);
+       else if(incoming.quarters.q4 && restoredQuarters.q4) restoredQuarters.q4=mergeQuarterState(restoredQuarters.q4,incoming.quarters.q4);
+       Object.keys(incoming.quarters).forEach(k=>{
+         if(!restoredQuarters[k]) restoredQuarters[k]=normalizeState(JSON.parse(JSON.stringify(incoming.quarters[k])));
+       });
+       let requested=String(incoming.current||parsed.current||'');
+       if(requested && !restoredQuarters[requested] && restoredQuarters[requested+'_2026']) requested=requested+'_2026';
+       const current=restoredQuarters[requested] ? requested : currentQuarterKey();
+       restoredStore={current,quarters:restoredQuarters};
+     } else {
+       // Legacy backup format: state is a single quarter, historically Quarter 3 of 2026.
+       let legacyState=incoming.state;
+       if(!legacyState && (incoming.w17 || incoming.w39 || incoming.personal || incoming.locations)) legacyState=incoming;
+       if(!legacyState || typeof legacyState!=='object') throw new Error('No saved hours or tracker state found.');
+       const restoredQuarters={};
+       Object.keys(QUARTERS).forEach(k=>restoredQuarters[k]=blankState());
+       const legacyKey=(parsed.current && QUARTERS[parsed.current]) ? parsed.current : 'q3_2026';
+       restoredQuarters[legacyKey]=normalizeState(legacyState);
+       restoredStore={current:legacyKey,quarters:restoredQuarters};
      }
 
-     // Accept all tracker backup shapes used by previous versions.
-     // 1) {current, quarters:{q3:...,q4:...}}
-     // 2) {q3:...,q4:...,current:...}
-     // 3) a single raw tracker state {w17:...,w39:...,personal:...}
-     let qs=incoming.quarters;
-     if(!qs && (incoming.q3 || incoming.q4)) qs={q3:incoming.q3,q4:incoming.q4};
-     if(!qs && (incoming.w17 || incoming.w39 || incoming.personal)) qs={q3:incoming,q4:blankState()};
-     if(!qs||typeof qs!=='object')throw new Error('No tracker data found');
+     // Save before refreshing the display; never report success if storage failed.
+     if(parsed.registration && typeof parsed.registration==='object') localStorage.setItem(REG_KEY,JSON.stringify(parsed.registration));
+     quarterStore=restoredStore;
+     activeQuarter=restoredStore.current;
+     state=quarterStore.quarters[activeQuarter] || blankState();
+     quarterStore.quarters[activeQuarter]=state;
+     localStorage.setItem(QUARTER_KEY,JSON.stringify(quarterStore));
+     localStorage.setItem(KEY,JSON.stringify(state));
 
-     const restoredQ3=normalizeState(qs.q3||blankState());
-     const restoredQ4=normalizeState(qs.q4||blankState());
-     const current=(incoming.current==='q4')?'q4':'q3';
-
-     quarterStore={current,quarters:{q3:restoredQ3,q4:restoredQ4}};
-     activeQuarter=current;
-     state=quarterStore.quarters[activeQuarter];
-     persistQuarters();
-     populateQuarterUI();
-     render();
-     alert('Backup restored successfully.');
+     // Restore is for the dynamic v2.0 app. Do not call the legacy static
+     // populateQuarterUI()/render() methods: they reference W17/W39 elements
+     // that are removed when the dynamic location panels are built.
+     activeQuarter=(restoredStore.current && QUARTERS[restoredStore.current]) ? restoredStore.current : currentQuarterKey();
+     if(!quarterStore.quarters[activeQuarter]) quarterStore.quarters[activeQuarter]=blankState();
+     state=normalizeState(quarterStore.quarters[activeQuarter]);
+     quarterStore.current=activeQuarter;
+     quarterStore.quarters[activeQuarter]=state;
+     localStorage.setItem(QUARTER_KEY,JSON.stringify(quarterStore));
+     localStorage.setItem(KEY,JSON.stringify(state));
+     // Refresh the dynamic v2 interface safely. A missing optional panel must
+     // never turn a valid restore into a reported restore failure.
+     const safeRefresh=(fn)=>{try{if(typeof fn==='function')fn();}catch(refreshError){console.warn('Optional UI refresh skipped:',refreshError);}};
+     safeRefresh(buildDynamicTabs);
+     safeRefresh(buildDynamicPanels);
+     safeRefresh(populateDynamicPeriods);
+     safeRefresh(selectCurrentQuarterAndPeriod);
+     safeRefresh(activateDynamicFirst);
+     safeRefresh(renderDynamic);
+     safeRefresh(renderAdminEditor);
+     safeRefresh(renderAdminLocationList);
+     // Preserve the automatically selected current quarter while keeping all
+     // historical quarter records (including Q3) available in storage.
+     alert('Backup restored. All quarters from the backup were saved. The current quarter is selected automatically; historical quarters remain saved.');
    }catch(e){
      console.error('Restore error:',e);
-     alert('That file is not a valid Quarter Hours Tracker backup. Please select the JSON file created by Backup Data.');
+     alert('Restore failed: '+(e&&e.message?e.message:'The file could not be read')+'. Your existing data was not intentionally cleared.');
    }
  };
  reader.onerror=function(){alert('The backup file could not be read.');};
  reader.readAsText(file);
 }
-
 function render(){renderLoc('w17');renderLoc('w39');let pt=total(state.personal),pp=total(state.personalPTO),counted=pt+pp,r=585-counted;document.getElementById('personalStats').innerHTML=`<div class="stats"><div class="stat">Regular input<b>${fmt(pt)}</b></div><div class="stat">PTO<b>${fmt(pp)}</b></div><div class="stat">Hours counted after PTO<b>${fmt(counted)}</b></div><div class="stat">Hours remaining<b>${fmt(r)}</b></div></div>`;document.getElementById('personalLog').innerHTML=table(state.personal,'personal','personal')+(state.personalPTO.length?'<table><tr><th colspan="4">Personal PTO</th></tr>'+state.personalPTO.map(e=>`<tr><td>${esc(e.date)}</td><td>${esc(e.period)}</td><td>${fmt(e.hours)}</td><td><button class="danger" onclick="clearEntry('personalPTO','personal','${e.id}')">Clear</button></td></tr>`).join('')+'</table>':'');let all=[
  ...state.w17.map(e=>({...e,location:'W17',category:'Regular Hours',type:'Regular'})),
  ...state.w39.map(e=>({...e,location:'W39',category:'Regular Hours',type:'Regular'})),
@@ -678,6 +788,8 @@ if(!registrationExists()){
   showRegistration();
   setupRegistrationForm();
 } else {
+  // Hide the setup screen when this browser already has a valid registration.
+  hideRegistration();
   populateQuarterUI();
   render();
   initializeDynamicTracker();
